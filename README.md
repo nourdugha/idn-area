@@ -3,40 +3,46 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/zaidysf/idn-area/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/zaidysf/idn-area/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/zaidysf/idn-area/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/zaidysf/idn-area/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![PHPStan Analysis](https://img.shields.io/github/actions/workflow/status/zaidysf/idn-area/phpstan.yml?branch=main&label=phpstan&style=flat-square)](https://github.com/zaidysf/idn-area/actions?query=workflow%3Aphpstan+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
 [![License](https://img.shields.io/packagist/l/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
 
-A comprehensive Laravel package providing Indonesian administrative area data including provinces, regencies, districts, villages, and islands. This package is compatible with Laravel 8, 9, 10, 11, and 12.
+A comprehensive Laravel package providing complete Indonesian administrative area data including provinces, regencies, districts, villages, and islands. Fully compatible with Laravel 8 through Laravel 12 and PHP 8.0+.
 
-## Features
+## ✨ Features
 
-- Complete Indonesian administrative hierarchy (Province → Regency → District → Village)
-- Islands data including outermost small islands and populated status
-- Eloquent models with proper relationships
-- Search functionality across all area types
-- Artisan command for data seeding
-- Support for Laravel 8+ and PHP 8.0+
-- Foreign key constraints for data integrity
-- Model factories for testing
-- Configurable through config file
+- 🏛️ **Complete Administrative Hierarchy** - Province → Regency → District → Village
+- 🏝️ **Islands Database** - Including outermost small islands and populated status
+- 🔗 **Eloquent Models** - With proper relationships and type hints
+- 🔍 **Search Functionality** - Across all area types with flexible queries
+- ⚡ **Artisan Commands** - Easy data seeding and management
+- 🚀 **Laravel 8-12 Support** - Full compatibility across all modern Laravel versions
+- 🔐 **Foreign Key Constraints** - Ensuring data integrity
+- 🧪 **Model Factories** - For comprehensive testing
+- ⚙️ **Configurable** - Customizable through config file
+- 📊 **PHPStan Level 6** - Strict type safety and static analysis
 
 ## 📋 Compatibility Matrix
 
 | Laravel Version | PHP Version | Status |
-|----------------|-------------|---------|
-| Laravel 8.x | PHP 8.0+ | ✅ Supported |
-| Laravel 9.x | PHP 8.0+ | ✅ Supported |
-| Laravel 10.x | PHP 8.1+ | ✅ Supported |
-| Laravel 11.x | PHP 8.2+ | ✅ Supported |
-| Laravel 12.x | PHP 8.2+ | ✅ Supported |
+|----------------|-------------|--------|
+| Laravel 8.x | PHP 8.0, 8.1, 8.2 | ✅ Fully Supported |
+| Laravel 9.x | PHP 8.0, 8.1, 8.2, 8.3 | ✅ Fully Supported |
+| Laravel 10.x | PHP 8.1, 8.2, 8.3, 8.4 | ✅ Fully Supported |
+| Laravel 11.x | PHP 8.2, 8.3, 8.4 | ✅ Fully Supported |
+| Laravel 12.x | PHP 8.2, 8.3, 8.4 | ✅ Fully Supported |
 
-## Installation
+## 🚀 Quick Start
 
-You can install the package via Composer:
+### Installation
+
+Install the package via Composer:
 
 ```bash
 composer require zaidysf/idn-area
 ```
+
+### Setup
 
 Publish and run the migrations:
 
@@ -45,7 +51,49 @@ php artisan vendor:publish --tag="idn-area-migrations"
 php artisan migrate
 ```
 
-Optionally, you can publish the config file:
+### Seed Data
+
+Populate your database with Indonesian area data:
+
+```bash
+php artisan idn-area:seed
+```
+
+### Start Using
+
+```php
+use zaidysf\IdnArea\Facades\IdnArea;
+
+// Get all provinces
+$provinces = IdnArea::provinces();
+
+// Search for areas
+$results = IdnArea::search('Jakarta');
+
+// Get statistics
+$stats = IdnArea::statistics();
+```
+
+## 📖 Detailed Installation
+
+If you need more detailed setup options:
+
+### Install Package
+
+```bash
+composer require zaidysf/idn-area
+```
+
+### Publish Migrations
+
+```bash
+php artisan vendor:publish --tag="idn-area-migrations"
+php artisan migrate
+```
+
+### Optional: Publish Config
+
+Optionally, you can publish the config file for customization:
 
 ```bash
 php artisan vendor:publish --tag="idn-area-config"
@@ -221,24 +269,37 @@ return [
 ];
 ```
 
-## Data Sources
+## 📊 Data Overview
 
-The data is sourced from official Indonesian government databases and maintained for accuracy. The package includes:
+The package includes comprehensive Indonesian administrative data:
 
-- 38 Provinces  
-- 500+ Regencies/Cities
-- 7,000+ Districts
-- 80,000+ Villages
-- 17,000+ Islands
+- 🏛️ **34 Provinces** - All Indonesian provinces
+- 🏢 **514 Regencies/Cities** - Complete regency and city data  
+- 🏘️ **7,230+ Districts** - All districts nationwide
+- 🏡 **83,931 Villages** - Complete village database
+- 🏝️ **17,508 Islands** - Including inhabited and outermost islands
 
-## Testing
+### Data Quality
+
+- ✅ **Government Sourced** - Official data from Indonesian government databases
+- ✅ **Regularly Updated** - Maintained for accuracy and completeness
+- ✅ **Validated Structure** - Foreign key constraints ensure data integrity
+- ✅ **PHPStan Level 6** - Strict type safety and comprehensive static analysis
+
+## 🧪 Testing
 
 ```bash
 # Run all tests
 composer test
 
 # Run tests with coverage
-composer run test-coverage
+composer test-coverage
+
+# Run PHPStan analysis
+composer analyse
+
+# Fix code style
+composer format
 
 # Run specific test file
 vendor/bin/pest tests/IdnAreaTest.php
@@ -249,7 +310,7 @@ vendor/bin/pest tests/ArchTest.php
 
 For detailed testing instructions, see [TESTING.md](TESTING.md).
 
-## API Usage Example
+## 📁 API Usage Example
 
 For complete API controller examples, see [examples/IdnAreaController.php](examples/IdnAreaController.php).
 
@@ -257,29 +318,99 @@ For complete API controller examples, see [examples/IdnAreaController.php](examp
 Route::prefix('api/idn-area')->group(function () {
     Route::get('provinces', [IdnAreaController::class, 'provinces']);
     Route::get('provinces/{provinceCode}/regencies', [IdnAreaController::class, 'regencies']);
+    Route::get('regencies/{regencyCode}/districts', [IdnAreaController::class, 'districts']);
+    Route::get('districts/{districtCode}/villages', [IdnAreaController::class, 'villages']);
     Route::get('search', [IdnAreaController::class, 'search']);
     Route::get('statistics', [IdnAreaController::class, 'statistics']);
 });
 ```
 
-## Changelog
+## 📝 Performance Tips
+
+### Optimize Queries
+
+```php
+// Use eager loading for relationships
+$provinces = Province::with(['regencies.districts'])->get();
+
+// Limit village searches for performance
+$villages = Village::where('name', 'like', '%Jakarta%')->limit(100)->get();
+
+// Use specific selects for large datasets
+$regencies = Regency::select('code', 'name')->where('province_code', '32')->get();
+```
+
+### Caching Recommendations
+
+```php
+// Cache frequently accessed data
+$provinces = Cache::remember('idn_provinces', 3600, function () {
+    return Province::all();
+});
+
+// Cache search results
+$searchResults = Cache::remember("search_{$query}", 1800, function () use ($query) {
+    return IdnArea::search($query);
+});
+```
+
+## 📅 Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request. Here's how you can contribute:
 
-## Security Vulnerabilities
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Make your changes** and add tests
+4. **Run the test suite**: `composer test`
+5. **Run static analysis**: `composer analyse`
+6. **Fix code style**: `composer format`
+7. **Commit your changes**: `git commit -m 'Add amazing feature'`
+8. **Push to the branch**: `git push origin feature/amazing-feature`
+9. **Open a Pull Request**
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+### Development Setup
 
-## Credits
+```bash
+# Clone the repository
+git clone https://github.com/zaidysf/idn-area.git
+cd idn-area
 
-- [Zaid Yasyaf](https://github.com/zaidysf)
-- [Indonesian Area Data](https://github.com/fityannugroho/idn-area-data) - Data source for Indonesian administrative areas
-- [All Contributors](../../contributors)
+# Install dependencies
+composer install
 
-## License
+# Run tests
+composer test
+
+# Run static analysis
+composer analyse
+```
+
+## 🔒 Security Vulnerabilities
+
+If you discover a security vulnerability within this package, please send an e-mail to Zaid Yasyaf via [zaid.ug@gmail.com](mailto:zaid.ug@gmail.com). All security vulnerabilities will be promptly addressed.
+
+Please review [our security policy](../../security/policy) for more information on how to report security vulnerabilities.
+
+## 📜 License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+## 🙏 Credits
+
+- [Zaid Yasyaf](https://github.com/zaidysf) - Package Author
+- [Indonesian Area Data](https://github.com/fityannugroho/idn-area-data) - Data source for Indonesian administrative areas
+- [All Contributors](../../contributors) - Community contributors
+
+---
+
+<div align="center">
+
+**Made with ❤️ in Indonesia**
+
+[View on Packagist](https://packagist.org/packages/zaidysf/idn-area) • [Report Issues](https://github.com/zaidysf/idn-area/issues) • [Documentation](https://github.com/zaidysf/idn-area)
+
+</div>
