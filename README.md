@@ -1,74 +1,265 @@
-# :package_description
+# Indonesian Area Data Package for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/zaidysf/idn-area/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/zaidysf/idn-area/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/zaidysf/idn-area/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/zaidysf/idn-area/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
+[![License](https://img.shields.io/packagist/l/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A comprehensive Laravel package providing Indonesian administrative area data including provinces, regencies, districts, villages, and islands. This package is compatible with Laravel 8, 9, 10, 11, and 12.
 
-## Support us
+## Features
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
+- Complete Indonesian administrative hierarchy (Province → Regency → District → Village)
+- Islands data including outermost small islands and populated status
+- Eloquent models with proper relationships
+- Search functionality across all area types
+- Artisan command for data seeding
+- Support for Laravel 8+ and PHP 8.0+
+- Foreign key constraints for data integrity
+- Model factories for testing
+- Configurable through config file
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+## 📋 Compatibility Matrix
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+| Laravel Version | PHP Version | Status |
+|----------------|-------------|---------|
+| Laravel 8.x | PHP 8.0+ | ✅ Supported |
+| Laravel 9.x | PHP 8.0+ | ✅ Supported |
+| Laravel 10.x | PHP 8.1+ | ✅ Supported |
+| Laravel 11.x | PHP 8.2+ | ✅ Supported |
+| Laravel 12.x | PHP 8.2+ | ✅ Supported |
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require zaidysf/idn-area
 ```
 
-You can publish and run the migrations with:
+Publish and run the migrations:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
+php artisan vendor:publish --tag="idn-area-migrations"
 php artisan migrate
 ```
 
-You can publish the config file with:
+Optionally, you can publish the config file:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-config"
+php artisan vendor:publish --tag="idn-area-config"
 ```
 
-This is the contents of the published config file:
+## Data Seeding
 
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
+Seed the Indonesian area data using the provided Artisan command:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-views"
+php artisan idn-area:seed
+```
+
+To force reseed (clear existing data and reseed):
+
+```bash
+php artisan idn-area:seed --force
 ```
 
 ## Usage
 
+### Using the Facade
+
 ```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+use zaidysf\IdnArea\Facades\IdnArea;
+
+// Get all provinces
+$provinces = IdnArea::provinces();
+
+// Get specific province
+$province = IdnArea::province('32'); // West Java
+
+// Get regencies by province
+$regencies = IdnArea::regenciesByProvince('32');
+
+// Get districts by regency
+$districts = IdnArea::districtsByRegency('32.04'); // Bandung
+
+// Get villages by district  
+$villages = IdnArea::villagesByDistrict('32.04.01'); // Sukasari
+
+// Get islands by regency
+$islands = IdnArea::islandsByRegency('32.04');
+
+// Search across all area types
+$results = IdnArea::search('Jakarta');
+
+// Get area statistics
+$stats = IdnArea::statistics();
 ```
+
+### Using Models Directly
+
+```php
+use zaidysf\IdnArea\Models\Province;
+use zaidysf\IdnArea\Models\Regency;
+use zaidysf\IdnArea\Models\District;
+use zaidysf\IdnArea\Models\Village;
+use zaidysf\IdnArea\Models\Island;
+
+// Get province with relationships
+$province = Province::with(['regencies.districts.villages'])->find('32');
+
+// Get regency with province
+$regency = Regency::with('province')->find('32.04');
+
+// Search for villages
+$villages = Village::where('name', 'like', '%Sukamaju%')->get();
+
+// Get populated islands only
+$populatedIslands = Island::populated()->get();
+
+// Get outermost small islands
+$outermostIslands = Island::outermostSmall()->get();
+```
+
+### Model Relationships
+
+```php
+// Province relationships
+$province = Province::find('32');
+$regencies = $province->regencies;
+$districts = $province->districts;
+
+// Regency relationships  
+$regency = Regency::find('32.04');
+$province = $regency->province;
+$districts = $regency->districts;
+$villages = $regency->villages;
+$islands = $regency->islands;
+
+// District relationships
+$district = District::find('32.04.01');
+$regency = $district->regency;
+$province = $district->province();
+$villages = $district->villages;
+
+// Village relationships
+$village = Village::find('32.04.01.2001');
+$district = $village->district;
+$regency = $village->regency();
+$province = $village->province();
+
+// Island relationships
+$island = Island::find(1);
+$regency = $island->regency;
+$province = $island->province();
+```
+
+### Using Model Factories (for Testing)
+
+```php
+// Create test data using factories
+$province = Province::factory()->jakarta()->create();
+$regency = Regency::factory()->forProvince('32')->create();
+$district = District::factory()->forRegency('32.04')->create();
+$village = Village::factory()->forDistrict('32.04.01')->create();
+
+// Create islands with specific attributes
+$populatedIsland = Island::factory()->populated()->create();
+$outermostIsland = Island::factory()->outermostSmall()->create();
+```
+
+## Data Structure
+
+### Provinces
+- `code`: 2-digit province code
+- `name`: Province name
+
+### Regencies  
+- `code`: 5-character regency code (XX.YY format)
+- `province_code`: Reference to province
+- `name`: Regency name
+
+### Districts
+- `code`: 8-character district code (XX.YY.ZZ format)  
+- `regency_code`: Reference to regency
+- `name`: District name
+
+### Villages
+- `code`: 13-character village code (XX.YY.ZZ.AAAA format)
+- `district_code`: Reference to district  
+- `name`: Village name
+
+### Islands
+- `id`: Auto-increment ID
+- `code`: Island code (optional)
+- `coordinate`: Geographic coordinates (optional)
+- `name`: Island name
+- `is_outermost_small`: Boolean flag for outermost small islands
+- `is_populated`: Boolean flag for populated status
+- `regency_code`: Reference to regency (optional)
+
+## Configuration
+
+The config file allows you to customize various aspects:
+
+```php
+return [
+    'table_prefix' => 'idn_',
+    'enable_foreign_keys' => true,
+    'search' => [
+        'village_limit' => 100,
+        'case_sensitive' => false,
+    ],
+    'models' => [
+        'province' => \zaidysf\IdnArea\Models\Province::class,
+        'regency' => \zaidysf\IdnArea\Models\Regency::class,
+        'district' => \zaidysf\IdnArea\Models\District::class,
+        'village' => \zaidysf\IdnArea\Models\Village::class,
+        'island' => \zaidysf\IdnArea\Models\Island::class,
+    ],
+];
+```
+
+## Data Sources
+
+The data is sourced from official Indonesian government databases and maintained for accuracy. The package includes:
+
+- 38 Provinces  
+- 500+ Regencies/Cities
+- 7,000+ Districts
+- 80,000+ Villages
+- 17,000+ Islands
 
 ## Testing
 
 ```bash
+# Run all tests
 composer test
+
+# Run tests with coverage
+composer run test-coverage
+
+# Run specific test file
+vendor/bin/pest tests/IdnAreaTest.php
+
+# Run architecture tests
+vendor/bin/pest tests/ArchTest.php
+```
+
+For detailed testing instructions, see [TESTING.md](TESTING.md).
+
+## API Usage Example
+
+For complete API controller examples, see [examples/IdnAreaController.php](examples/IdnAreaController.php).
+
+```php
+Route::prefix('api/idn-area')->group(function () {
+    Route::get('provinces', [IdnAreaController::class, 'provinces']);
+    Route::get('provinces/{provinceCode}/regencies', [IdnAreaController::class, 'regencies']);
+    Route::get('search', [IdnAreaController::class, 'search']);
+    Route::get('statistics', [IdnAreaController::class, 'statistics']);
+});
 ```
 
 ## Changelog
@@ -77,7 +268,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Security Vulnerabilities
 
@@ -85,7 +276,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Zaid Yasyaf](https://github.com/zaidysf)
+- [Indonesian Area Data](https://github.com/fityannugroho/idn-area-data) - Data source for Indonesian administrative areas
 - [All Contributors](../../contributors)
 
 ## License

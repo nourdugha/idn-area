@@ -8,12 +8,35 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "06:00"
     labels:
       - "dependencies"
+      - "github-actions"
+    reviewers:
+      - "zaidysf"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
 
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday" 
+      time: "06:00"
     labels:
       - "dependencies"
+      - "composer"
+    reviewers:
+      - "zaidysf"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    ignore:
+      # Ignore major version updates for production dependencies
+      - dependency-name: "illuminate/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "spatie/*"
+        update-types: ["version-update:semver-major"]
+    open-pull-requests-limit: 10
