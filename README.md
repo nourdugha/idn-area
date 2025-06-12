@@ -1,11 +1,8 @@
 # Indonesian Area Data Package for Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/zaidysf/idn-area/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/zaidysf/idn-area/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Support on Patreon](https://img.shields.io/badge/Support-Patreon-f96854?style=flat-square&logo=patreon)](https://patreon.com/zaidysf)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/zaidysf/idn-area/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/zaidysf/idn-area/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![PHPStan Analysis](https://img.shields.io/github/actions/workflow/status/zaidysf/idn-area/phpstan.yml?branch=main&label=phpstan&style=flat-square)](https://github.com/zaidysf/idn-area/actions?query=workflow%3Aphpstan+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
-[![License](https://img.shields.io/packagist/l/zaidysf/idn-area.svg?style=flat-square)](https://packagist.org/packages/zaidysf/idn-area)
 
 A comprehensive Laravel package providing complete Indonesian administrative area data including provinces, regencies, districts, villages, and islands. Fully compatible with Laravel 8 through Laravel 12 and PHP 8.0+.
 
